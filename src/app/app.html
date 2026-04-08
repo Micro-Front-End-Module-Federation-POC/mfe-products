@@ -1,4 +1,75 @@
-<div class="products-header">Products MicroFrontEnd</div>
+<div class="products">
 
-<div class="products-header"> Cart Count: {{ cartCount() }} </div>
-<button (click)="addToCart()" class="products-button">Add to Cart</button>
+  <div class="mfe-banner">
+    <span class="mfe-banner__dot"></span>
+    <span>
+      <strong>MFE Products</strong> — independently deployed micro frontend. Loaded at runtime via Webpack Module Federation.
+      Can also run as a
+      <a class="mfe-banner__link"
+         [href]="standaloneUrl"
+         target="_blank" rel="noopener">
+        standalone app &#8599;
+      </a>
+    </span>
+  </div>
+
+  <div class="products__header">
+    <div>
+      <h2 class="products__title">Browse Courses</h2>
+      <p class="products__sub">{{ courses.length }} courses available &bull; {{ cartCount() }} added to cart</p>
+    </div>
+    <div class="cart-pill">
+      <span class="cart-pill__icon">&#128722;</span>
+      <span class="cart-pill__count">{{ cartCount() }}</span>
+      <span class="cart-pill__label">in cart</span>
+    </div>
+  </div>
+
+  <div class="courses-grid">
+    @for (course of courses; track course.id) {
+      <div class="course-card" [class.course-card--added]="addedIds().has(course.id)">
+
+        <div class="course-card__header">
+          <span class="course-card__icon" [innerHTML]="course.icon"></span>
+          <div class="course-card__badges">
+            <span class="badge badge--tag">{{ course.tag }}</span>
+            <span class="badge badge--level">{{ course.level }}</span>
+          </div>
+        </div>
+
+        <div class="course-card__body">
+          <h3 class="course-card__title">{{ course.title }}</h3>
+          <p class="course-card__instructor">
+            <span class="instructor-avatar">{{ course.instructor[0] }}</span>
+            {{ course.instructor }}
+          </p>
+          <div class="course-card__rating">
+            <span class="stars">&#11088; {{ course.rating }}</span>
+            <span class="reviews">({{ course.reviews | number }} reviews)</span>
+          </div>
+        </div>
+
+        <div class="course-card__footer">
+          <div class="course-card__price">
+            <span class="price__amount">&#8377;{{ course.price }}</span>
+          </div>
+          @if (!addedIds().has(course.id)) {
+            <button class="btn btn--add" (click)="addToCart(course)">
+              <span>+</span> Add to Cart
+            </button>
+          } @else {
+            <button class="btn btn--added" (click)="removeFromCart(course.id)">
+              <span>&#10003;</span> Added
+            </button>
+          }
+        </div>
+
+        @if (addedIds().has(course.id)) {
+          <div class="course-card__ribbon">In Cart</div>
+        }
+
+      </div>
+    }
+  </div>
+
+</div>
