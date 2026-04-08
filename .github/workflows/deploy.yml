@@ -33,6 +33,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
 
+      - name: Copy index.html as 404.html
+        run: cp dist/mfe-products/index.html dist/mfe-products/404.html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
