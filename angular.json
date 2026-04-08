@@ -27,6 +27,11 @@
 								"glob": "**/*",
 								"input": "public",
 								"output": "."
+							},
+							{
+								"glob": "404.html",
+								"input": "src",
+								"output": "."
 							}
 						],
 						"styles": [
@@ -34,7 +39,7 @@
 						],
 						"main": "src/main.ts",
 						"outputPath": "dist/mfe-products",
-						"index": "src\\index.html",
+						"index": "src/index.html",
 						"extraWebpackConfig": "webpack.config.js",
 						"commonChunk": false
 					},
